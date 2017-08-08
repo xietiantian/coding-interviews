@@ -1,5 +1,7 @@
+import org.jetbrains.annotations.Contract;
+
 /**
- * Author: Íõ¿¡³¬
+ * Author: ç‹ä¿Šè¶…
  * Date: 2015-05-06
  * Time: 08:44
  * Declaration: All Rights Reserved !!!
@@ -7,82 +9,113 @@
 public class Test29 {
 
     /**
-     * ÌâÄ¿£ºÊı×éÖĞÓĞÒ»¸öÊı×Ö³öÏÖµÄ´ÎÊı³¬¹ıÊı×é³¤¶ÈµÄÒ»°ë£¬ÇëÕÒ³öÕâ¸öÊı×Ö
+     * é¢˜ç›®ï¼šæ•°ç»„ä¸­æœ‰ä¸€ä¸ªæ•°å­—å‡ºç°çš„æ¬¡æ•°è¶…è¿‡æ•°ç»„é•¿åº¦çš„ä¸€åŠï¼Œè¯·æ‰¾å‡ºè¿™ä¸ªæ•°å­—
+     * Moore votingç®—æ³•å®ç°ï¼ŒO(n)
      *
-     * @param numbers ÊäÈëÊı×é
-     * @return ÕÒµ½µÄÊı×Ö
+     * @param numbers è¾“å…¥æ•°ç»„
+     * @return æ‰¾åˆ°çš„æ•°å­—
      */
-    public static int moreThanHalfNum(int[] numbers) {
+    @Contract("null -> fail")
+    private static int moreThanHalfNum2(int[] numbers) {
 
-        // ÊäÈëĞ£Ñé
+        // è¾“å…¥æ ¡éªŒ
         if (numbers == null || numbers.length < 1) {
             throw new IllegalArgumentException("array length must large than 0");
         }
 
-        // ÓÃÓÚ¼ÇÂ¼³öÏÖ´ÎÊı´óÓÚÊı×éÒ»°ëµÄÊı
-        int result = numbers[0];
-        // ÓÚµ±Ç°¼ÇÂ¼µÄÊı²»Í¬µÄÊıµÄ¸öÊı
-        int count = 1;
-        // ´ÓµÚ¶ş¸öÊı¿ªÊ¼ÏòºóÕÒ
-        for (int i = 1; i < numbers.length; i++) {
-            // Èç¹û¼ÇÊıÎª0
-            if (count == 0) {
-                // ÖØĞÂ¼ÇÂ¼Ò»¸öÊı£¬¼ÙÉèËüÊÇ³öÏÖ´ÎÊı´óÓÚÊı×éÒ»°ëµÄ
-                result = numbers[i];
-                // ¼ÇÂ¼Í³¼ÆÖµ
-                count = 1;
-            }
-            // Èç¹û¼ÇÂ¼µÄÖµÓëÍ³¼ÆÖµÏàµÈ£¬¼ÇÊıÖµÔö¼Ó
-            else if (result == numbers[i]) {
-                count++;
-            }
-            // Èç¹û²»ÏàÍ¬¾Í¼õÉÙ£¬Ïà»¥µÖÏû
-            else {
+        // Moore voting
+        int count = 0, ret = 0;
+        for (int num : numbers) {
+            if (count == 0)
+                ret = num;
+            if (num != ret)
                 count--;
-            }
+            else
+                count++;
         }
 
-        // ×îºóµÄresult¿ÉÄÜÊÇ³öÏÖ´ÎÊı´óÓÚÊı×éÒ»°ë³¤¶ÈµÄÖµ
-        // Í³¼ÆresultµÄ³öÏÖ´ÎÊı
+        // æœ€åçš„resultå¯èƒ½ä¸æ˜¯å‡ºç°æ¬¡æ•°å¤§äºæ•°ç»„ä¸€åŠé•¿åº¦çš„å€¼
+        // ç»Ÿè®¡resultçš„å‡ºç°æ¬¡æ•°ï¼Œè¿›è¡ŒéªŒè¯
         count = 0;
-        for (int number : numbers) {
-            if (result == number) {
+        for (int num : numbers) {
+            if (ret == num) {
                 count++;
             }
         }
-
-        // Èç¹û³öÏÖ´ÎÊı´óÓÚÊı×éµÄÒ»°ë¾Í·µ»Ø¶ÔÓ¦µÄÖµ
         if (count > numbers.length / 2) {
-            return result;
-        }
-        // ·ñÔòÊäÈëÒì³£
-        else {
-            throw new IllegalArgumentException("invalid input");
+            return ret;
+        } else {// å¯»æ‰¾çš„å…ƒç´ ä¸å­˜åœ¨
+            throw new IllegalArgumentException("majority element does not exist");
         }
     }
 
+    /**
+     * é¢˜ç›®ï¼šæ•°ç»„ä¸­æœ‰ä¸€ä¸ªæ•°å­—å‡ºç°çš„æ¬¡æ•°è¶…è¿‡æ•°ç»„é•¿åº¦çš„ä¸€åŠï¼Œè¯·æ‰¾å‡ºè¿™ä¸ªæ•°å­—
+     * ç”¨å¿«é€Ÿæ’åºä¸­çš„partitionæ–¹æ³•å®ç°ï¼ŒO(n)
+     *
+     * @param numbers
+     * @return
+     */
+    @Contract("null -> fail")
+    private static int moreThanHalfNum(int[] numbers) {
+
+        // è¾“å…¥æ ¡éªŒ
+        if (numbers == null || numbers.length < 1) {
+            throw new IllegalArgumentException("array length must large than 0");
+        }
+
+        // partition
+        int mid = numbers.length >> 1;
+        int start = 0, end = numbers.length - 1;
+        int index = Sort.quickSortPartition(numbers, start, end);
+        while (index != mid) {
+            if (index > mid)
+                end = index - 1;
+            else
+                start = index + 1;
+            index = Sort.quickSortPartition(numbers, start, end);
+        }
+
+        // æœ€åçš„resultå¯èƒ½ä¸æ˜¯å‡ºç°æ¬¡æ•°å¤§äºæ•°ç»„ä¸€åŠé•¿åº¦çš„å€¼
+        // ç»Ÿè®¡resultçš„å‡ºç°æ¬¡æ•°ï¼Œè¿›è¡ŒéªŒè¯
+        int count = 0;
+        int ret = numbers[index];
+        for (int num : numbers) {
+            if (ret == num) {
+                count++;
+            }
+        }
+        if (count > numbers.length / 2) {
+            return ret;
+        } else {// å¯»æ‰¾çš„å…ƒç´ ä¸å­˜åœ¨
+            throw new IllegalArgumentException("majority element does not exist");
+        }
+    }
+
+
     public static void main(String[] args) {
-        // ´æÔÚ³öÏÖ´ÎÊı³¬¹ıÊı×é³¤¶ÈÒ»°ëµÄÊı×Ö
+        // å­˜åœ¨å‡ºç°æ¬¡æ•°è¶…è¿‡æ•°ç»„é•¿åº¦ä¸€åŠçš„æ•°å­—
         int numbers[] = {1, 2, 3, 2, 2, 2, 5, 4, 2};
         System.out.println(moreThanHalfNum(numbers));
 
-        // ³öÏÖ´ÎÊı³¬¹ıÊı×é³¤¶ÈÒ»°ëµÄÊı×Ö¶¼³öÏÖÔÚÊı×éµÄÇ°°ë²¿·Ö
+        // å‡ºç°æ¬¡æ•°è¶…è¿‡æ•°ç»„é•¿åº¦ä¸€åŠçš„æ•°å­—éƒ½å‡ºç°åœ¨æ•°ç»„çš„å‰åŠéƒ¨åˆ†
         int numbers2[] = {2, 2, 2, 2, 2, 1, 3, 4, 5};
         System.out.println(moreThanHalfNum(numbers2));
 
-        // ³öÏÖ´ÎÊı³¬¹ıÊı×é³¤¶ÈÒ»°ëµÄÊı×Ö¶¼³öÏÖÔÚÊı×éµÄºó°ë²¿·Ö
+        // å‡ºç°æ¬¡æ•°è¶…è¿‡æ•°ç»„é•¿åº¦ä¸€åŠçš„æ•°å­—éƒ½å‡ºç°åœ¨æ•°ç»„çš„ååŠéƒ¨åˆ†
         int numbers3[] = {1, 3, 4, 5, 2, 2, 2, 2, 2};
         System.out.println(moreThanHalfNum(numbers3));
 
-        // Ö»ÓĞÒ»¸öÊı
+        // åªæœ‰ä¸€ä¸ªæ•°
         int numbers4[] = {1};
         System.out.println(moreThanHalfNum(numbers4));
 
-        // ÊäÈë¿ÕÖ¸Õë
-        moreThanHalfNum(null);
-        // ²»´æÔÚ³öÏÖ´ÎÊı³¬¹ıÊı×é³¤¶ÈÒ»°ëµÄÊı×Ö
+        // ä¸å­˜åœ¨å‡ºç°æ¬¡æ•°è¶…è¿‡æ•°ç»„é•¿åº¦ä¸€åŠçš„æ•°å­—
         int numbers5[] = {1, 2, 3, 2, 4, 2, 5, 2, 3};
         moreThanHalfNum(numbers5);
+
+        // è¾“å…¥ç©ºæŒ‡é’ˆ
+        moreThanHalfNum(null);
     }
 }
 

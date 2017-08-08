@@ -1,72 +1,65 @@
 /**
- * Author: Íõ¿¡³¬
+ * Author: ç‹ä¿Šè¶…
  * Date: 2015-04-23
  * Time: 21:22
  * Declaration: All Rights Reserved !!!
  */
 public class Test20 {
     /**
-     * ÊäÈëÒ»¸ö¾ØÕó£¬°´ÕÕ´ÓÍâÏòÀïÒÔË³Ê±ÕëµÄË³ĞòÒÀ´Î´òÓ¡Ã¿Ò»¸öÊı×Ö
+     * è¾“å…¥ä¸€ä¸ªçŸ©é˜µï¼ŒæŒ‰ç…§ä»å¤–å‘é‡Œä»¥é¡ºæ—¶é’ˆçš„é¡ºåºä¾æ¬¡æ‰“å°æ¯ä¸€ä¸ªæ•°å­—
      *
-     * @param numbers ÊäÈëµÄ¶şÎ¬Êı×é£¬¶şÎ¬Êı×é±ØĞëÊÇN*MµÄ£¬·ñÔò·Ö³ö´í
+     * @param numbers è¾“å…¥çš„äºŒç»´æ•°ç»„ï¼ŒäºŒç»´æ•°ç»„å¿…é¡»æ˜¯N*Mçš„ï¼Œå¦åˆ™åˆ†å‡ºé”™
      */
     public static void printMatrixClockWisely(int[][] numbers) {
-        // ÊäÈëµÄ²ÎÊı²»ÄÜÎª¿Õ
+        // è¾“å…¥çš„å‚æ•°ä¸èƒ½ä¸ºç©º
         if (numbers == null) {
             return;
         }
 
-        // ¼ÇÂ¼Ò»È¦£¨»·£©µÄ¿ªÊ¼Î»ÖÃµÄĞĞ
-        int x = 0;
-        // ¼ÇÂ¼Ò»È¦£¨»·£©µÄ¿ªÊ¼Î»ÖÃµÄÁĞ
-        int y = 0;
-        // ¶ÔÃ¿Ò»È¦£¨»·£©½øĞĞ´¦Àí£¬
-        // ĞĞºÅ×î´óÊÇ(numbers.length-1)/2
-        // ÁĞºÅ×î´óÊÇ(numbers[0].length-1)/2
-        while (x * 2 < numbers.length && y * 2 < numbers[0].length) {
-            printMatrixInCircle(numbers, x, y);
-            // Ö¸ÏòÏÂÒ»¸öÒª´¦ÀíµÄµÄ»·µÄµÚÒ»¸öÎ»ÖÃ
-            x++;
-            y++;
+        // è®°å½•ä¸€åœˆï¼ˆç¯ï¼‰çš„å¼€å§‹ä½ç½®çš„è¡Œ(ä¹Ÿæ˜¯å¼€å§‹ä½ç½®çš„åˆ—)
+        int start = 0;
+        // å¯¹æ¯ä¸€åœˆï¼ˆç¯ï¼‰è¿›è¡Œå¤„ç†ï¼Œ
+        // è¡Œå·start<=è¡Œå·æœ€å¤§å€¼(numbers.length-1)/2 && åˆ—å·start<=åˆ—å·æœ€å¤§å€¼(numbers[0].length-1)/2
+        while (start * 2 < numbers.length && start * 2 < numbers[0].length) {
+            printMatrixInCircle(numbers, start);
+            // æŒ‡å‘ä¸‹ä¸€ä¸ªè¦å¤„ç†çš„çš„ç¯çš„ç¬¬ä¸€ä¸ªä½ç½®
+            start++;
         }
     }
 
-    public static void printMatrixInCircle(int[][] numbers, int x, int y) {
-        // Êı×éµÄĞĞÊı
-        int rows = numbers.length;
-        // Êı×éµÄÁĞÊı
-        int cols = numbers[0].length;
+    public static void printMatrixInCircle(int[][] numbers, int start) {
 
-        // Êä³ö»·µÄÉÏÃæÒ»ĞĞ£¬°üÀ¨×îÖĞµÄÄÇ¸öÊı×Ö
-        for (int i = y; i <= cols - y - 1; i++) {
-            System.out.print(numbers[x][i] + " ");
+        int endX = numbers[0].length - 1 - start;
+        int endY = numbers.length - 1 - start;
+
+        // è¾“å‡ºç¯çš„ä¸Šé¢ä¸€è¡Œï¼ŒåŒ…æ‹¬æœ€ä¸­çš„é‚£ä¸ªæ•°å­—
+        for (int i = start; i <= endX; i++) {
+            System.out.print(numbers[start][i] + " ");
         }
 
-        // »·µÄ¸ß¶ÈÖÁÉÙÎª2²Å»áÊä³öÓÒ±ßµÄÒ»ÁĞ
-        // rows-x-1£º±íÊ¾µÄÊÇ»·×îÏÂµÄÄÇÒ»ĞĞµÄĞĞºÅ
-        if (rows - x - 1 > x) {
-            // ÒòÎªÓÒ±ßÄÇÒ»ÁĞµÄ×îÉÏÃæÄÇÒ»¸öÒÑ¾­±»Êä³öÁË£¬ËùÒÔĞĞ³Ê´Óx+1¿ªÊ¼£¬
-            // Êä³ö°üÀ¨ÓÒ±ßÄÇÁĞµÄ×îÏÂÃæÄÇ¸ö
-            for (int i = x + 1; i <= rows - x - 1; i++) {
-                System.out.print(numbers[i][cols - y - 1] + " ");
+        // ç¯çš„é«˜åº¦è‡³å°‘ä¸º2æ‰ä¼šè¾“å‡ºå³è¾¹çš„ä¸€åˆ—
+        if (endY > start) {
+            // å› ä¸ºå³è¾¹é‚£ä¸€åˆ—çš„æœ€ä¸Šé¢é‚£ä¸€ä¸ªå·²ç»è¢«è¾“å‡ºäº†ï¼Œæ‰€ä»¥è¡Œå‘ˆä»start+1å¼€å§‹ï¼Œ
+            // è¾“å‡ºåŒ…æ‹¬å³è¾¹é‚£åˆ—çš„æœ€ä¸‹é¢é‚£ä¸ª
+            for (int i = start + 1; i <= endY; i++) {
+                System.out.print(numbers[i][endX] + " ");
             }
         }
 
-        // »·µÄ¸ß¶ÈÖÁÉÙÊÇ2²¢ÇÒ»·µÄ¿í¶ÈÖÁÉÙÊÇ2²Å»áÊä³öÏÂÃæÄÇÒ»ĞĞ
-        // cols-1-y£º±íÊ¾µÄÊÇ»·×îÓÒÄÇÒ»ÁĞµÄÁĞºÅ
-        if (rows - x - 1 > x && cols - 1 - y > y) {
-            // ÒòÎª»·µÄ×óÏÂ½ÇµÄÎ»ÖÃÒÑ¾­Êä³öÁË£¬ËùÒÔÁĞºÅ´Ócols-y-2¿ªÊ¼
-            for (int i = cols - y - 2; i >= y; i--) {
-                System.out.print(numbers[rows - 1 - x][i] + " ");
+        // ç¯çš„é«˜åº¦è‡³å°‘æ˜¯2å¹¶ä¸”ç¯çš„å®½åº¦è‡³å°‘æ˜¯2æ‰ä¼šè¾“å‡ºä¸‹é¢é‚£ä¸€è¡Œ
+        // cols-1-startï¼šè¡¨ç¤ºçš„æ˜¯ç¯æœ€å³é‚£ä¸€åˆ—çš„åˆ—å·
+        if (endY > start && endX > start) {
+            // å› ä¸ºç¯çš„å·¦ä¸‹è§’çš„ä½ç½®å·²ç»è¾“å‡ºäº†ï¼Œæ‰€ä»¥åˆ—å·ä»cols-start-2å¼€å§‹
+            for (int i = endX - 1; i >= start; i--) {
+                System.out.print(numbers[endY][i] + " ");
             }
         }
 
-        // »·µÄ¿í¶ÈÖÁÉÙÊÇ2²¢ÇÒ»·µÄ¸ß¶ÈÖÁÉÙÊÇ3²Å»áÊä³ö×î×ó±ßÄÇÒ»ÁĞ
-        // rows-x-1£º±íÊ¾µÄÊÇ»·×îÏÂµÄÄÇÒ»ĞĞµÄĞĞºÅ
-        if (cols - 1 - y > y && rows - 1 - x > x + 1) {
-            // ÒòÎª×î×ó±ßÄÇÒ»ÁĞµÄµÚÒ»¸öºÍ×îºóÒ»¸öÒÑ¾­±»Êä³öÁË
-            for (int i = rows - 1 - x - 1; i >= x + 1; i--) {
-                System.out.print(numbers[i][y] + " ");
+        // ç¯çš„å®½åº¦è‡³å°‘æ˜¯2å¹¶ä¸”ç¯çš„é«˜åº¦è‡³å°‘æ˜¯3æ‰ä¼šè¾“å‡ºæœ€å·¦è¾¹é‚£ä¸€åˆ—
+        if (endX > start && endY > start + 1) {
+            // å› ä¸ºæœ€å·¦è¾¹é‚£ä¸€åˆ—çš„ç¬¬ä¸€ä¸ªå’Œæœ€åä¸€ä¸ªå·²ç»è¢«è¾“å‡ºäº†
+            for (int i = endY - 1; i >= start + 1; i--) {
+                System.out.print(numbers[i][start] + " ");
             }
         }
     }
@@ -148,9 +141,9 @@ public class Test20 {
         printMatrixClockWisely(numbers8);
         System.out.println();
 
-        // 0¸öÔªËØµÄÊı×é
+        // 0ä¸ªå…ƒç´ çš„æ•°ç»„
         printMatrixClockWisely(new int[][]{{}});
-        // ¿ÕÊı×é
+        // ç©ºæ•°ç»„
         printMatrixClockWisely(null);
     }
 }

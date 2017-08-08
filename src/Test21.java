@@ -1,95 +1,19 @@
+import java.util.ArrayDeque;
+import java.util.Deque;
 import java.util.Stack;
 
 /**
- * Author: ������
+ * Author: 王俊超
  * Date: 2015-04-24
  * Time: 08:41
  * Declaration: All Rights Reserved !!!
  */
 public class Test21 {
-    /**
-     * ����ջ�����ݽṹ�����ڸ�������ʵ��һ���ܹ��õ�У����СԪ�ص�min������
-     * �ڸ�ջ�У�����pop��push ��min��ʱ�临�Ӷȶ���0(1)
-     *
-     * @param <T> ���Ͳ���
-     */
-    public static class StackWithMin<T extends Comparable<T>> {
-        // ����ջ�����ڴ�Ų��������
-        private Stack<T> dataStack;
-        // ��С��λ��ջ���������ջ����С������λ��
-        private Stack<Integer> minStack;
-
-        // ���캯��
-        public StackWithMin() {
-            this.dataStack = new Stack<>();
-            this.minStack = new Stack<>();
-        }
-
-        /**
-         * ��ջ����
-         * @return ջ��Ԫ��
-         */
-        public T pop() {
-            // ���ջ�Ѿ�Ϊ�գ��ٳ�ջ�׳��쳣
-            if (dataStack.isEmpty()) {
-                throw new RuntimeException("The stack is already empty");
-            }
-
-            // ��������ݣ���С��λ��ջ������ջ�ض�������ͬ��Ԫ�ظ�����
-            // ����ջͬʱ��ջ
-            minStack.pop();
-            return dataStack.pop();
-        }
-
-        /**
-         * Ԫ����ջ
-         * @param t ��ջ��Ԫ��
-         */
-        public void push(T t) {
-            // �����ջ��Ԫ��Ϊ�վ��׳��쳣
-            if (t == null) {
-                throw new RuntimeException("Element can be null");
-            }
-
-            // �������ջ�ǿյģ�ֻ�ӽ�Ԫ����ջ��ͬʱ������С��ջ�е�����
-            if (dataStack.isEmpty()) {
-                dataStack.push(t);
-                minStack.push(0);
-            }
-            // �������ջ��������
-            else {
-                // ��ȡ����ջ�е���СԪ�أ�δ����t֮ǰ�ģ�
-                T e = dataStack.get(minStack.peek());
-                // ��t��ջ
-                dataStack.push(t);
-                // �����������ݱ�ջ�е���СԪ��С
-                if (t.compareTo(e) < 0) {
-                    // ���µ���СԪ�ص�λ������Сջ
-                    minStack.push(dataStack.size() - 1);
-                } else {
-                    // �����Ԫ�ز���ԭ������СԪ��С��������Сջջ��Ԫ�أ�������ջ
-                    minStack.push(minStack.peek());
-                }
-            }
-        }
-
-        /**
-         * ��ȡջ�е���СԪ��
-         * @return ջ�е���СԪ��
-         */
-        public T min() {
-            // �����С����λ��ջ�Ѿ�Ϊ�գ�����ջ���Ѿ�û�������ˣ������׳��쳣
-            if (minStack.isEmpty()) {
-                throw new RuntimeException("No element in stack.");
-            }
-
-            // ��ȡ����ջ�е���СԪ�أ����ҷ��ؽ��
-            return dataStack.get(minStack.peek());
-        }
-    }
 
     public static void main(String[] args) {
-        StackWithMin<Integer> stack = new StackWithMin<>();
+        StackWithMin1<Integer> stack = new StackWithMin1<>();
+//        StackWithMin<Integer> stack = new StackWithMin<>();
+
         stack.push(3);
         System.out.println(stack.min() == 3);
         stack.push(4);
@@ -104,5 +28,178 @@ public class Test21 {
         System.out.println(stack.min() == 3);
         stack.push(0);
         System.out.println(stack.min() == 0);
+    }
+}
+
+/**
+ * 定义栈的数据结构，请在该类型中实现一个能够得到校的最小元素的min函数。
+ * 在该栈中，调用pop、push 及min的时间复杂度都是o(1)
+ * <p>
+ * 【注意：记录最小元素的栈存储的是最小数位置，如果使用{@link Deque}
+ * 实现栈的功能而不用{@link Stack}，则get指定index的元素的
+ * 时间复杂度不一定是o(1)】
+ *
+ * @param <T> 泛型参数
+ */
+class StackWithMin<T extends Comparable<T>> {
+    // 数据栈，用于存放插入的数据
+    private Stack<T> dataStack;
+    // 最小数位置栈，存放数据栈中最小的数的位置
+    private Stack<Integer> minStack;
+
+    // 构造函数
+    public StackWithMin() {
+        this.dataStack = new Stack<>();
+        this.minStack = new Stack<>();
+    }
+
+    /**
+     * 出栈方法
+     *
+     * @return 栈顶元素
+     */
+    public T pop() {
+        // 如果栈已经为空，再出栈抛出异常
+        if (dataStack.isEmpty()) {
+            throw new RuntimeException("The stack is already empty");
+        }
+
+        // 如果有数据，最小数位置栈和数据栈必定是有相同的元素个数，
+        // 两个栈同时出栈
+        minStack.pop();
+        return dataStack.pop();
+    }
+
+    /**
+     * 元素入栈
+     *
+     * @param t 入栈的元素
+     */
+    public void push(T t) {
+        // 如果入栈的元素为空就抛出异常
+        if (t == null) {
+            throw new RuntimeException("Element can be null");
+        }
+
+        // 如果数据栈是空的，只接将元素入栈，同时更新最小数栈中的数据
+        if (dataStack.isEmpty()) {
+            dataStack.push(t);
+            minStack.push(0);
+        }
+        // 如果数据栈中有数据
+        else {
+            // 获取数据栈中的最小元素（未插入t之前的）
+            T e = dataStack.get(minStack.peek());
+            // 将t入栈
+            dataStack.push(t);
+            // 如果插入的数据比栈中的最小元素小
+            if (t.compareTo(e) < 0) {
+                // 将新的最小元素的位置入最小栈
+                minStack.push(dataStack.size() - 1);
+            } else {
+                // 插入的元素不比原来的最小元素小，复制最小栈栈顶元素，将其入栈
+                minStack.push(minStack.peek());
+            }
+        }
+    }
+
+    /**
+     * 获取栈中的最小元素
+     *
+     * @return 栈中的最小元素
+     */
+    public T min() {
+        // 如果最小数公位置栈已经为空（数据栈中已经没有数据了），则抛出异常
+        if (minStack.isEmpty()) {
+            throw new RuntimeException("No element in stack.");
+        }
+
+        // 获取数据栈中的最小元素，并且返回结果
+        return dataStack.get(minStack.peek());
+    }
+}
+
+
+/**
+ * 定义栈的数据结构，请在该类型中实现一个能够得到校的最小元素的min函数。
+ * 在该栈中，调用pop、push 及min的时间复杂度都是o(1)
+ *
+ * @param <T> 泛型参数
+ */
+class StackWithMin1<T extends Comparable<T>> {
+    // 数据栈，用于存放插入的数据
+    private Deque<T> dataStack;
+    // 最小数位置栈，存放数据栈中最小的数的位置
+    private Deque<T> minStack;
+
+    // 构造函数
+    public StackWithMin1() {
+        this.dataStack = new ArrayDeque<>();
+        this.minStack = new ArrayDeque<>();
+    }
+
+    /**
+     * 出栈方法
+     *
+     * @return 栈顶元素
+     */
+    public T pop() {
+        // 如果栈已经为空，再出栈抛出异常
+        if (dataStack.isEmpty()) {
+            throw new RuntimeException("The stack is already empty");
+        }
+
+        // 如果有数据，最小数位置栈和数据栈必定是有相同的元素个数，
+        // 两个栈同时出栈
+        minStack.pop();
+        return dataStack.pop();
+    }
+
+    /**
+     * 元素入栈
+     *
+     * @param t 入栈的元素
+     */
+    public void push(T t) {
+        // 如果入栈的元素为空就抛出异常
+        if (t == null) {
+            throw new RuntimeException("Element can be null");
+        }
+
+        // 如果数据栈是空的，只接将元素入栈，同时更新最小数栈中的数据
+        if (dataStack.isEmpty()) {
+            dataStack.push(t);
+            minStack.push(t);
+        }
+        // 如果数据栈中有数据
+        else {
+            // 获取数据栈中的最小元素（未插入t之前的）
+            T e = minStack.peek();
+            // 将t入栈
+            dataStack.push(t);
+            // 如果插入的数据比栈中的最小元素小
+            if (t.compareTo(e) < 0) {
+                // 将新的最小元素入最小栈
+                minStack.push(t);
+            } else {
+                // 插入的元素不比原来的最小元素小，复制最小栈栈顶元素，将其入栈
+                minStack.push(minStack.peek());
+            }
+        }
+    }
+
+    /**
+     * 获取栈中的最小元素
+     *
+     * @return 栈中的最小元素
+     */
+    public T min() {
+        // 如果最小数公位置栈已经为空（数据栈中已经没有数据了），则抛出异常
+        if (minStack.isEmpty()) {
+            throw new RuntimeException("No element in stack.");
+        }
+
+        // 获取数据栈中的最小元素，并且返回结果
+        return minStack.peek();
     }
 }

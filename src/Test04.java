@@ -1,24 +1,25 @@
 /**
- * Author: Íõ¿¡³¬
+ * Author: ç‹ä¿Šè¶…
  * Date: 2015-04-21
  * Time: 19:09
  * Declaration: All Rights Reserved !!!
  */
 public class Test04 {
     /**
-     * ÇëÊµÏÖÒ»¸öº¯Êı£¬°Ñ×Ö·û´®ÖĞµÄÃ¿¸ö¿Õ¸ñÌæ»»³É"%20"£¬ÀıÈç¡°We are happy.¡°£¬ÔòÊä³ö¡±We%20are%20happy.¡°¡£
+     * è¯·å®ç°ä¸€ä¸ªå‡½æ•°ï¼ŒæŠŠå­—ç¬¦ä¸²ä¸­çš„æ¯ä¸ªç©ºæ ¼æ›¿æ¢æˆ"%20"ï¼Œ
+     * ä¾‹å¦‚â€œWe are happy.â€œï¼Œåˆ™è¾“å‡ºâ€We%20are%20happy.â€œã€‚
      *
-     * @param string     Òª×ª»»µÄ×Ö·ûÊı×é
-     * @param usedLength ÒÑ¾­×Ö·ûÊı×éÖĞÒÑ¾­Ê¹ÓÃµÄ³¤¶È
-     * @return ×ª»»ºóÊ¹ÓÃµÄ×Ö·û³¤¶È£¬-1±íÊ¾´¦ÀíÊ§°Ü
+     * @param string     è¦è½¬æ¢çš„å­—ç¬¦æ•°ç»„
+     * @param usedLength å·²ç»å­—ç¬¦æ•°ç»„ä¸­å·²ç»ä½¿ç”¨çš„é•¿åº¦
+     * @return è½¬æ¢åä½¿ç”¨çš„å­—ç¬¦é•¿åº¦ï¼Œ-1è¡¨ç¤ºå¤„ç†å¤±è´¥
      */
     public static int replaceBlank(char[] string, int usedLength) {
-        // ÅĞ¶ÏÊäÈëÊÇ·ñºÏ·¨
+        // åˆ¤æ–­è¾“å…¥æ˜¯å¦åˆæ³•
         if (string == null || string.length < usedLength) {
             return -1;
         }
 
-        // Í³¼Æ×Ö·ûÊı×éÖĞµÄ¿Õ°××Ö·ûÊı
+        // ç»Ÿè®¡å­—ç¬¦æ•°ç»„ä¸­çš„ç©ºç™½å­—ç¬¦æ•°
         int whiteCount = 0;
         for (int i = 0; i < usedLength; i++) {
             if (string[i] == ' ') {
@@ -26,29 +27,29 @@ public class Test04 {
             }
         }
 
-        // ¼ÆËã×ª»»ºóµÄ×Ö·û³¤¶ÈÊÇ¶àÉÙ
+        // è®¡ç®—è½¬æ¢åçš„å­—ç¬¦é•¿åº¦æ˜¯å¤šå°‘
         int targetLength = whiteCount * 2 + usedLength;
-        int tmp = targetLength; // ±£´æ³¤¶È½á¹ûÓÃÓÚ·µ»Ø
-        if (targetLength > string.length) { // Èç¹û×ª»»ºóµÄ³¤¶È´óÓÚÊı×éµÄ×î´ó³¤¶È£¬Ö±½Ó·µ»ØÊ§°Ü
+        int tmp = targetLength; // ä¿å­˜é•¿åº¦ç»“æœç”¨äºè¿”å›
+        if (targetLength > string.length) { // å¦‚æœè½¬æ¢åçš„é•¿åº¦å¤§äºæ•°ç»„çš„æœ€å¤§é•¿åº¦ï¼Œç›´æ¥è¿”å›å¤±è´¥
             return -1;
         }
 
-        // Èç¹ûÃ»ÓĞ¿Õ°××Ö·û¾Í²»ÓÃ´¦Àí
+        // å¦‚æœæ²¡æœ‰ç©ºç™½å­—ç¬¦å°±ä¸ç”¨å¤„ç†
         if (whiteCount == 0) {
             return usedLength;
         }
 
-        usedLength--; // ´ÓºóÏòÇ°£¬µÚÒ»¸ö¿ªÊ¼´¦ÀíµÄ×Ö·û
-        targetLength--; // ´¦ÀíºóµÄ×Ö·û·ÅÖÃµÄÎ»ÖÃ
+        usedLength--; // ä»åå‘å‰ï¼Œç¬¬ä¸€ä¸ªå¼€å§‹å¤„ç†çš„å­—ç¬¦
+        targetLength--; // å¤„ç†åçš„å­—ç¬¦æ”¾ç½®çš„ä½ç½®
 
-        // ×Ö·ûÖĞÓĞ¿Õ°××Ö·û£¬Ò»Ö±´¦Àíµ½ËùÓĞµÄ¿Õ°××Ö·û´¦ÀíÍê
+        // å­—ç¬¦ä¸­æœ‰ç©ºç™½å­—ç¬¦ï¼Œä¸€ç›´å¤„ç†åˆ°æ‰€æœ‰çš„ç©ºç™½å­—ç¬¦å¤„ç†å®Œ
         while (usedLength >= 0 && usedLength < targetLength) {
-            // ÈçÊÇµ±Ç°×Ö·ûÊÇ¿Õ°××Ö·û£¬½øĞĞ"%20"Ìæ»»
+            // å¦‚æ˜¯å½“å‰å­—ç¬¦æ˜¯ç©ºç™½å­—ç¬¦ï¼Œè¿›è¡Œ"%20"æ›¿æ¢
             if (string[usedLength] == ' ') {
                 string[targetLength--] = '0';
                 string[targetLength--] = '2';
                 string[targetLength--] = '%';
-            } else { // ·ñÔòÒÆ¶¯×Ö·û
+            } else { // å¦åˆ™ç§»åŠ¨å­—ç¬¦
                 string[targetLength--] = string[usedLength];
             }
             usedLength--;

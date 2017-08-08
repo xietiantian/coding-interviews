@@ -1,15 +1,15 @@
 /**
- * Author: Íõ¿¡³¬
+ * Author: ç‹ä¿Šè¶…
  * Date: 2015-06-11
  * Time: 14:35
  * Declaration: All Rights Reserved !!!
  */
 public class Test34 {
     /**
-     * ÅĞ¶ÏÒ»¸öÊıÊÇ·ñÖ»ÓĞ2£¬3£¬5Òò×Ó£¨³óÊı£©
+     * åˆ¤æ–­ä¸€ä¸ªæ•°æ˜¯å¦åªæœ‰2ï¼Œ3ï¼Œ5å› å­ï¼ˆä¸‘æ•°ï¼‰
      *
-     * @param num ´ıÅĞ¶ÏµÄÊı£¬·Ç¸º
-     * @return trueÊÇ³óÊı£¬false³óÊı
+     * @param num å¾…åˆ¤æ–­çš„æ•°ï¼Œéè´Ÿ
+     * @return trueæ˜¯ä¸‘æ•°ï¼Œfalseä¸‘æ•°
      */
     private static boolean isUgly(int num) {
         while (num % 2 == 0) {
@@ -28,10 +28,10 @@ public class Test34 {
     }
 
     /**
-     * ÕÒµÚindex¸ö³óÊı£¬ËÙ¶ÈÌ«Âı
+     * æ‰¾ç¬¬indexä¸ªä¸‘æ•°ï¼Œé€Ÿåº¦å¤ªæ…¢
      *
-     * @param index µÚindex¸ö³óÊı
-     * @return ¶ÔÓ¦µÄ³óÊıÖµ
+     * @param index ç¬¬indexä¸ªä¸‘æ•°
+     * @return å¯¹åº”çš„ä¸‘æ•°å€¼
      */
     public static int getUglyNumber(int index) {
         if (index <= 0) {
@@ -51,44 +51,29 @@ public class Test34 {
     }
 
     /**
-     * ÕÒµÚindex¸ö³óÊı£¬¡¾µÚ¶şÖÖ·½·¨¡¿
+     * æ‰¾ç¬¬indexä¸ªä¸‘æ•°ï¼Œã€ç¬¬äºŒç§æ–¹æ³•ã€‘
      *
-     * @param index µÚindex¸ö³óÊı
-     * @return ¶ÔÓ¦µÄ³óÊıÖµ
+     * @param index ç¬¬indexä¸ªä¸‘æ•°
+     * @return å¯¹åº”çš„ä¸‘æ•°å€¼
      */
     public static int getUglyNumber2(int index) {
-        if (index <= 0) {
-            return 0;
-        }
-
-        int[] pUglyNumbers = new int[index];
-        pUglyNumbers[0] = 1;
-        int nextUglyIndex = 1;
-
-        int p2 = 0;
-        int p3 = 0;
-        int p5 = 0;
-
-        while (nextUglyIndex < index) {
-            int min = min(pUglyNumbers[p2] * 2, pUglyNumbers[p3] * 3, pUglyNumbers[p5] * 5);
-            pUglyNumbers[nextUglyIndex] = min;
-
-            while (pUglyNumbers[p2] * 2 <= pUglyNumbers[nextUglyIndex]) {
+        if (index <= 0) return 0;
+        int[] uglyNum = new int[index];
+        uglyNum[0] = 1;
+        int p2 = 0, p3 = 0, p5 = 0;
+        for (int i = 1; i < index; i++) {
+            uglyNum[i] = min(uglyNum[p2] * 2, uglyNum[p3] * 3, uglyNum[p5] * 5);
+            while (uglyNum[p2] * 2 <= uglyNum[i]) {
                 p2++;
             }
-
-            while (pUglyNumbers[p3] * 3 <= pUglyNumbers[nextUglyIndex]) {
+            while (uglyNum[p3] * 3 <= uglyNum[i]) {
                 p3++;
             }
-
-            while (pUglyNumbers[p5] * 5 <= pUglyNumbers[nextUglyIndex]) {
+            while (uglyNum[p5] * 5 <= uglyNum[i]) {
                 p5++;
             }
-
-            nextUglyIndex++;
         }
-
-        return pUglyNumbers[nextUglyIndex - 1];
+        return uglyNum[index - 1];
     }
 
     private static int min(int n1, int n2, int n3) {

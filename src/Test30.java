@@ -197,7 +197,9 @@ public class Test30 {
 
     /**
      * 题目： 输入n个整数，找出其中最小的k个数。
-     * 【第二种解法】
+     * 【第二种解法】适合海量数据（n非常大的情况）。
+     * 使用大根堆或者红黑树。O(nlogk)
+     *
      * @param input  输入数组
      * @param output 输出数组
      */
@@ -227,19 +229,22 @@ public class Test30 {
 
     /**
      * 题目： 输入n个整数，找出其中最小的k个数。
-     * 【第一种解法】
-     * @param input  输入数组
-     * @param output 输出数组
+     * 【第一种解法】用快速排序中的partition方法实现，O(n)
+     *
+     * @param input 输入数组
+     * @param k
+     * @return 输出数组
      */
-    public static void getLeastNumbers(int[] input, int[] output) {
+    public static int[] getLeastNumbers(int[] input, int k) {
 
-        if (input == null || output == null || output.length <= 0 || input.length < output.length) {
+        if (input == null || k <= 0 || input.length < k) {
             throw new IllegalArgumentException("Invalid args");
         }
 
+        int[] output = new int[k];
         int start = 0;
         int end = input.length - 1;
-        int index = partition(input, start, end);
+        int index = Sort.quickSortPartition(input, start, end);
         int target = output.length - 1;
 
         while (index != target) {
@@ -248,37 +253,11 @@ public class Test30 {
             } else {
                 end = index - 1;
             }
-            index = partition(input, start, end);
+            index = Sort.quickSortPartition(input, start, end);
         }
 
-        System.arraycopy(input, 0, output, 0, output.length);
-    }
-
-    /**
-     * 分区算法
-     *
-     * @param input 输入数组
-     * @param start 开始下标
-     * @param end   结束下标
-     * @return 分区位置
-     */
-    private static int partition(int[] input, int start, int end) {
-        int tmp = input[start];
-
-        while (start < end) {
-            while (start < end && input[end] >= tmp) {
-                end--;
-            }
-            input[start] = input[end];
-
-            while (start < end && input[start] <= tmp) {
-                start++;
-            }
-            input[end] = input[start];
-        }
-
-        input[start] = tmp;
-        return start;
+        System.arraycopy(input, 0, output, 0, k);
+        return output;
     }
 
 
@@ -294,23 +273,20 @@ public class Test30 {
     private static void test1() {
         int[] data = {4, 5, 1, 6, 2, 7, 3, 8};
 
-        int[] output = new int[4];
-        getLeastNumbers(data, output);
+        int[] output = getLeastNumbers(data, 4);
         for (int i : output) {
             System.out.print(i + " ");
         }
         System.out.println();
 
-        int[] output2 = new int[8];
-        getLeastNumbers(data, output2);
+        int[] output2 = getLeastNumbers(data, 8);
         for (int i : output2) {
             System.out.print(i + " ");
         }
         System.out.println();
 
 
-        int[] output3 = new int[1];
-        getLeastNumbers(data, output3);
+        int[] output3 = getLeastNumbers(data, 1);
         for (int i : output3) {
             System.out.print(i + " ");
         }
@@ -318,8 +294,7 @@ public class Test30 {
 
 
         int[] data2 = {4, 5, 1, 6, 2, 7, 2, 8};
-        int[] output4 = new int[2];
-        getLeastNumbers(data2, output4);
+        int[] output4 = getLeastNumbers(data2, 2);
         for (int i : output4) {
             System.out.print(i + " ");
         }

@@ -1,3 +1,4 @@
+import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
@@ -24,21 +25,30 @@ public class Test35 {
             }
         }
 
+        //LinkHashMap迭代顺序和插入顺序相同，不需要迭代整个数组，找到第一个value>=0的直接返回就可以了
         Set<Map.Entry<Character, Integer>> entrySet = map.entrySet();
-        // 记录只出现一次的字符的索引
-        int idx = Integer.MAX_VALUE;
-        // 记录只出现一次的字符
-        char result = '\0';
-
-        // 找最小索引对应的字符
-        for (Map.Entry<Character, Integer> entry : entrySet) {
-            if (entry.getValue() >= 0 && entry.getValue() < idx) {
-                idx = entry.getValue();
-                result = entry.getKey();
-            }
+        Map.Entry<Character, Integer> entry;
+        for (Iterator<Map.Entry<Character, Integer>> iterator = entrySet.iterator(); iterator.hasNext(); ) {
+            entry = iterator.next();
+            if (entry.getValue() >= 0)
+                return entry.getKey();
         }
+        return '\0';
 
-        return result;
+//        // 记录只出现一次的字符的索引
+//        int idx = Integer.MAX_VALUE;
+//        // 记录只出现一次的字符
+//        char result = '\0';
+//
+//        // 找最小索引对应的字符
+//        for (Map.Entry<Character, Integer> entry : entrySet) {
+//            if (entry.getValue() >= 0 && entry.getValue() < idx) {
+//                idx = entry.getValue();
+//                result = entry.getKey();
+//            }
+//        }
+//
+//        return result;
     }
 
     public static void main(String[] args) {

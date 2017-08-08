@@ -1,45 +1,31 @@
 /**
- * Author: Íõ¿¡³¬
+ * Author: ç‹ä¿Šè¶…
  * Date: 2015-06-10
  * Time: 19:54
  * Declaration: All Rights Reserved !!!
  */
 public class Test31 {
     /**
-     * ÌâÄ¿2 ÊäÈëÒ»¸öÕûĞÍÊı×é£¬Êı×éÀïÓĞÕıÊıÒ²ÓĞ¸ºÊı¡£Êı×éÖĞÒ»¸ö»òÁ¬
-     * ĞøµÄ¶à¸öÕûÊı×é³ÉÒ»¸ö×ÓÊı×é¡£ÇóËùÓĞ×ÓÊı×éµÄºÍµÄ×î´óÖµ¡£ÒªÇóÊ±¼ä¸´ÔÓ¶ÈÎªO(n)¡£
+     * é¢˜ç›®2 è¾“å…¥ä¸€ä¸ªæ•´å‹æ•°ç»„ï¼Œæ•°ç»„é‡Œæœ‰æ­£æ•°ä¹Ÿæœ‰è´Ÿæ•°ã€‚æ•°ç»„ä¸­ä¸€ä¸ªæˆ–è¿
+     * ç»­çš„å¤šä¸ªæ•´æ•°ç»„æˆä¸€ä¸ªå­æ•°ç»„ã€‚æ±‚æ‰€æœ‰å­æ•°ç»„çš„å’Œçš„æœ€å¤§å€¼ã€‚è¦æ±‚æ—¶é—´å¤æ‚åº¦ä¸ºO(n)ã€‚
      *
-     * @param arr ÊäÈëÊı×é
-     * @return ×î´óµÄÁ¬Ğø×ÓÊı×éºÍ
+     * @param array è¾“å…¥æ•°ç»„
+     * @return æœ€å¤§çš„è¿ç»­å­æ•°ç»„å’Œ
      */
-    public static int findGreatestSumOfSubArray(int[] arr) {
-        // ²ÎÊıĞ£Ñé
-        if (arr == null || arr.length < 1) {
-            throw new IllegalArgumentException("Array must contain an element");
-        }
+    public static int findGreatestSumOfSubArray(int[] array) {
+        if (array == null || array.length < 1) return 0;
 
-        // ¼ÇÂ¼×î´óµÄ×ÓÊı×éºÍ£¬¿ªÊ¼Ê±ÊÇ×îĞ¡µÄÕûÊı
-        int max = Integer.MIN_VALUE;
-        // µ±Ç°µÄºÍ
-        int curMax = 0;
-        // Êı×é±éÀú
-        for (int i : arr) {
-            // Èç¹ûµ±Ç°ºÍĞ¡ÓÚµÈÓÚ0£¬¾ÍÖØĞÂÉèÖÃµ±Ç°ºÍ
-            if (curMax <= 0) {
-                curMax = i;
+        int sum = array[0];
+        int max = array[0];
+        for (int i = 1; i < array.length; i++) {
+            sum += array[i];
+            if (sum < array[i]) {
+                sum = array[i];
             }
-            // Èç¹ûµ±Ç°ºÍ´óÓÚ0£¬ÀÛ¼Óµ±Ç°ºÍ
-            else {
-                curMax += i;
-            }
-
-            // ¸üĞÂ¼ÇÂ¼µ½µÄ×îÔÚµÄ×ÓÊı×éºÍ
-            if (max < curMax) {
-                max = curMax;
+            if (sum > max) {
+                max = sum;
             }
         }
-
-
         return max;
     }
 

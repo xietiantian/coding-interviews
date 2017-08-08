@@ -1,3 +1,5 @@
+import java.awt.*;
+
 /**
  * Author: 王俊超
  * Date: 2015-04-25
@@ -24,11 +26,10 @@ public class Test27 {
     public static BinaryTreeNode convert(BinaryTreeNode root) {
 
         // 用于保存处理过程中的双向链表的尾结点
-        BinaryTreeNode[] lastNode = new BinaryTreeNode[1];
-        convertNode(root, lastNode);
+        BinaryTreeNode lastNode = null;
+        BinaryTreeNode head = convertNode(root, lastNode);
 
         // 找到双向链表的头结点
-        BinaryTreeNode head = lastNode[0];
         while (head != null && head.left != null) {
             head = head.left;
         }
@@ -40,33 +41,24 @@ public class Test27 {
      * 链表表转换操作
      *
      * @param node     当前的根结点
-     * @param lastNode 已经处理好的双向链表的尾结点，使用一个长度为1的数组，类似C++中的二级指针
+     * @param lastNode 已经处理好的双向链表的尾结点
+     * @return 处理完的尾节点
      */
-    public static void convertNode(BinaryTreeNode node, BinaryTreeNode[] lastNode) {
-        // 结点不为空
-        if (node != null) {
+    public static BinaryTreeNode convertNode(BinaryTreeNode node, BinaryTreeNode lastNode) {
+        // 结点为空返回null
+        if (node == null) return lastNode;
 
-            // 如果有左子树就先处理左子树
-            if (node.left != null) {
-                convertNode(node.left, lastNode);
-            }
+        // 如果有左子树就先处理左子树，将当前结点的前驱指向已经处理好的双向链表（由当前结点的左子树构成）的尾结点
+        lastNode = convertNode(node.left, lastNode);
+        node.left = lastNode;
 
-            // 将当前结点的前驱指向已经处理好的双向链表（由当前结点的左子树构成）的尾结点
-            node.left = lastNode[0];
-
-            // 如果左子树转换成的双向链表不为空，设置尾结点的后继
-            if (lastNode[0] != null) {
-                lastNode[0].right = node;
-            }
-
-            // 记录当前结点为尾结点
-            lastNode[0] = node;
-
-            // 处理右子树
-            if (node.right != null) {
-                convertNode(node.right, lastNode);
-            }
+        // 如果左子树转换成的双向链表不为空，设置尾结点的后继
+        if (lastNode != null) {
+            lastNode.right = node;
         }
+
+        // 处理右子树，当前结点为尾结点
+        return convertNode(node.right, node);
     }
 
 
@@ -83,7 +75,6 @@ public class Test27 {
             System.out.print(head.value + "->");
             head = head.right;
         }
-
         System.out.println("null");
     }
 
