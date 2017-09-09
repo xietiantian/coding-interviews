@@ -1,12 +1,12 @@
 /**
- * Author: Íõ¿¡³¬
+ * Author: ç‹ä¿Šè¶…
  * Date: 2015-06-13
  * Time: 09:02
  * Declaration: All Rights Reserved !!!
  */
 public class Test37 {
     /**
-     * Á´±í½áµãÀà
+     * é“¾è¡¨ç»“ç‚¹ç±»
      */
     private static class ListNode {
         int val;
@@ -27,21 +27,23 @@ public class Test37 {
     }
 
     /**
-     * ÕÒÁ½¸ö½áµãµÄµÚÒ»¸ö¹«¹²½áµã£¬Èç¹ûÃ»ÓĞÕÒµ½·µ»Ønull£¬·½·¨±È½ÏºÃ£¬¿¼ÂÇÁËÁ½¸öÁ´±íÖĞÓĞnullµÄÇé¿ö
+     * æ‰¾ä¸¤ä¸ªç»“ç‚¹çš„ç¬¬ä¸€ä¸ªå…¬å…±ç»“ç‚¹ï¼Œå¦‚æœæ²¡æœ‰æ‰¾åˆ°è¿”å›nullï¼Œæ–¹æ³•æ¯”è¾ƒå¥½ï¼Œè€ƒè™‘äº†ä¸¤ä¸ªé“¾è¡¨ä¸­æœ‰nullçš„æƒ…å†µ
      *
-     * @param head1 µÚÒ»¸öÁ´±í
-     * @param head2 µÚ¶ş¸öÁ´±í
-     * @return ÕÒµ½µÄ¹«¹²½áµã£¬Ã»ÓĞ·µ»Ønull
+     * @param head1 ç¬¬ä¸€ä¸ªé“¾è¡¨
+     * @param head2 ç¬¬äºŒä¸ªé“¾è¡¨
+     * @return æ‰¾åˆ°çš„å…¬å…±ç»“ç‚¹ï¼Œæ²¡æœ‰è¿”å›null
      */
     public static ListNode findFirstCommonNode(ListNode head1, ListNode head2) {
         int length1 = getListLength(head1);
         int length2 = getListLength(head2);
-
-        int diff = length1 - length2;
-        ListNode longListHead = head1;
-        ListNode shortListHead = head2;
-
-        if (diff < 0) {
+        ListNode longListHead;
+        ListNode shortListHead;
+        int diff;
+        if (length1 > length2) {
+            longListHead = head1;
+            shortListHead = head2;
+            diff = length1 - length2;
+        } else {
             longListHead = head2;
             shortListHead = head1;
             diff = length2 - length1;
@@ -56,7 +58,7 @@ public class Test37 {
             shortListHead = shortListHead.next;
         }
 
-        // ·µ»ØµÚÒ»¸öÏàÍ¬µÄ¹«¹²½áµã£¬Èç¹ûÃ»ÓĞ·µ»Ønull
+        // è¿”å›ç¬¬ä¸€ä¸ªç›¸åŒçš„å…¬å…±ç»“ç‚¹ï¼Œå¦‚æœæ²¡æœ‰è¿”å›null
         return longListHead;
     }
 
@@ -78,7 +80,7 @@ public class Test37 {
     }
 
     private static void test1() {
-        // µÚÒ»¸ö¹«¹²½áµãÔÚÁ´±íÖĞ¼ä
+        // ç¬¬ä¸€ä¸ªå…¬å…±ç»“ç‚¹åœ¨é“¾è¡¨ä¸­é—´
         // 1 - 2 - 3 \
         //            6 - 7
         //     4 - 5 /
@@ -103,7 +105,7 @@ public class Test37 {
 
 
     private static void test2() {
-        // Ã»ÓĞ¹«¹²½áµã
+        // æ²¡æœ‰å…¬å…±ç»“ç‚¹
         // 1 - 2 - 3 - 4
         //
         // 5 - 6 - 7
@@ -125,7 +127,7 @@ public class Test37 {
     }
 
     private static void test3() {
-        // ¹«¹²½áµãÊÇ×îºóÒ»¸ö½áµã
+        // å…¬å…±ç»“ç‚¹æ˜¯æœ€åä¸€ä¸ªç»“ç‚¹
         // 1 - 2 - 3 - 4 \
         //                7
         //         5 - 6 /
@@ -148,9 +150,9 @@ public class Test37 {
     }
 
     private static void test4() {
-        // ¹«¹²½áµãÊÇµÚÒ»¸ö½áµã
+        // å…¬å…±ç»“ç‚¹æ˜¯ç¬¬ä¸€ä¸ªç»“ç‚¹
         // 1 - 2 - 3 - 4 - 5
-        // Á½¸öÁ´±íÍêÈ«ÖØºÏ
+        // ä¸¤ä¸ªé“¾è¡¨å®Œå…¨é‡åˆ
         ListNode n1 = new ListNode(1);
         ListNode n2 = new ListNode(2);
         ListNode n3 = new ListNode(3);

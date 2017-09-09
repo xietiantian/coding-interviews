@@ -4,7 +4,7 @@ import java.util.Map;
 import java.util.Set;
 
 /**
- * Author: Íõ¿¡³¬
+ * Author: ç‹ä¿Šè¶…
  * Date: 2015-06-11
  * Time: 16:46
  * Declaration: All Rights Reserved !!!
@@ -25,7 +25,7 @@ public class Test35 {
             }
         }
 
-        //LinkHashMapµü´úË³ĞòºÍ²åÈëË³ĞòÏàÍ¬£¬²»ĞèÒªµü´úÕû¸öÊı×é£¬ÕÒµ½µÚÒ»¸övalue>=0µÄÖ±½Ó·µ»Ø¾Í¿ÉÒÔÁË
+        //LinkHashMapè¿­ä»£é¡ºåºå’Œæ’å…¥é¡ºåºç›¸åŒï¼Œä¸éœ€è¦è¿­ä»£æ•´ä¸ªæ•°ç»„ï¼Œæ‰¾åˆ°ç¬¬ä¸€ä¸ªvalue>=0çš„ç›´æ¥è¿”å›å°±å¯ä»¥äº†
         Set<Map.Entry<Character, Integer>> entrySet = map.entrySet();
         Map.Entry<Character, Integer> entry;
         for (Iterator<Map.Entry<Character, Integer>> iterator = entrySet.iterator(); iterator.hasNext(); ) {
@@ -35,12 +35,12 @@ public class Test35 {
         }
         return '\0';
 
-//        // ¼ÇÂ¼Ö»³öÏÖÒ»´ÎµÄ×Ö·ûµÄË÷Òı
+//        // è®°å½•åªå‡ºç°ä¸€æ¬¡çš„å­—ç¬¦çš„ç´¢å¼•
 //        int idx = Integer.MAX_VALUE;
-//        // ¼ÇÂ¼Ö»³öÏÖÒ»´ÎµÄ×Ö·û
+//        // è®°å½•åªå‡ºç°ä¸€æ¬¡çš„å­—ç¬¦
 //        char result = '\0';
 //
-//        // ÕÒ×îĞ¡Ë÷Òı¶ÔÓ¦µÄ×Ö·û
+//        // æ‰¾æœ€å°ç´¢å¼•å¯¹åº”çš„å­—ç¬¦
 //        for (Map.Entry<Character, Integer> entry : entrySet) {
 //            if (entry.getValue() >= 0 && entry.getValue() < idx) {
 //                idx = entry.getValue();

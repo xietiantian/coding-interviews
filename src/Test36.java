@@ -2,7 +2,7 @@ import java.util.HashMap;
 import java.util.Set;
 
 /**
- * Author: ������
+ * Author: 王俊超
  * Date: 2015-06-11
  * Time: 17:20
  * Declaration: All Rights Reserved !!!
@@ -20,6 +20,16 @@ public class Test36 {
         return inversePairsCore(data, copy, 0, data.length - 1);
     }
 
+    /**
+     * 类似归并排序的方式统计逆序对。
+     * see {@link Sort#merge(int[], int, int, int)}
+     *
+     * @param data  原数组，算完完成后data将是有序的
+     * @param copy  归并用的辅助数组
+     * @param start 本次处理的起始下标
+     * @param end   本次处理的结束下标
+     * @return start到end之间的逆序对个数
+     */
     private static int inversePairsCore(int[] data, int[] copy, int start, int end) {
 
         if (start == end) {
@@ -31,13 +41,13 @@ public class Test36 {
         int left = inversePairsCore(copy, data, start, start + length);
         int right = inversePairsCore(copy, data, start + length + 1, end);
 
-        // ǰ��ε����һ�����ֵ��±�
+        // 前半段的最后一个数字的下标
         int i = start + length;
-        // �������һ�����ֵ��±�
+        // 后半段最后一个数字的下标
         int j = end;
-        // ��ʼ������λ��
+        // 开始拷贝的位置
         int indexCopy = end;
-        // ������
+        // 逆序数
         int count = 0;
 
         while (i >= start && j >= start + length + 1) {
@@ -45,7 +55,7 @@ public class Test36 {
                 copy[indexCopy] = data[i];
                 indexCopy--;
                 i--;
-                count += j - (start + length); // ��Ӧ��������
+                count += j - (start + length); // 对应的逆序数
             } else {
                 copy[indexCopy] = data[j];
                 indexCopy--;
@@ -64,7 +74,9 @@ public class Test36 {
             indexCopy--;
             j--;
         }
-        return count + left + right;
+
+        //逆序对个数=前半段的逆序对个数+后半段的逆序对个数+两段合并产生的逆序对个数
+        return left + right + count;
     }
 
     public static void main(String[] args) {
